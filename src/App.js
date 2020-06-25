@@ -9,7 +9,7 @@ class App extends Component {
        <h1>Hi! I'm a React app!</h1>
        <Person name='David' age='25' />
        <Person name='Pablo' age='27' />
-       <Person name='Dani' age='26' />
+       <Person name='Dani' age='26' > This text is a child of a Perosn component. Children can be passed to a component using the reserved word 'children'. </Person>
       </div>
     );
 
