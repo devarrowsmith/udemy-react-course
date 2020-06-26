@@ -15,6 +15,7 @@ class App extends Component {
   }
 
   //Here's an event handler for the button component below. We may want to put this into a different document later, along with the button itself, to make the code properly modular.
+
   switchNameHandler = () => {
     // Previously we may have done something like this:
     //this.state.persons[0].name = 'Dave'
@@ -26,6 +27,7 @@ class App extends Component {
         { name: 'Carley', age: 26 }
       ]
     })
+    // This only updates the specified bit of state, and it only updates that part of the DOM. Only chanding state and changing props cause these kind of realtime DOM updates :3
   }
 
   // Here we render the direct Child component(/s).
