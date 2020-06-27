@@ -89,8 +89,8 @@ import React, { useState} from 'react'
 
 // We use the useState hook to define the initial state of the component.
 // UseState returns an array with -exactly two- elements:
-  // The first element is the current state.
-  // The second element is a function that can update the first element and re-render it. We can call this to update the state. Nifty" the syntax is:
+  // The first element is the current state. (I've popped an additional variable in here for a demo further down these notes).
+  // The second element is a function that can update the first element and re-render it. We can call this to update the state. Nifty!
 // We can store this in a constant.
 
     const stateArray = useState({
@@ -98,7 +98,8 @@ import React, { useState} from 'react'
         { name: 'David', age: 25 },
         { name: 'Pablo', age: 28 },
         { name: 'Dani', age: 26 }
-      ]
+      ],
+      sameAddress: true,
     });
 
 // Oh, but we can go a step further! We can use Array Destructuring to attach these elements to variables, so that we can call them easily. Array destructuring is like object destructuring; `const [  element1, element2] = array`.
@@ -115,7 +116,10 @@ import React, { useState} from 'react'
 
 // There are two semantic differences here compared to the Class based component. 
   // We no longer need to use the 'this.' keyword to call things from whtihin thic omponent. Classes need to use 'this.', so class based components need to use 'this.'. However functional components are functions,a nd these can call their own properties using just the property's name.
-  // Previously we called state using this.setState. Now we use the  setPersonsState method from the destructured useState expression above, and pass the new state into it.
+  // Previously we changed the state using this.setState. Now we use the  setPersonsState method from the destructured useState expression above, and pass the new state into it.
+// There is also a SUPER IMPORTANT FUNCTIONAL DIFFERENCE.
+  // The setPersonsState method (or whatever we call the new Set State method) DOES NOT MERGE THE NEW STATE DATA WITH THE OLD STATE DATA. It REPLACES it. The old data is deleted and the new data replaces it. As such, you need to include ALL required data in the new data set. You can't just add one piece to a set and expect the other pieces to remain as they were.
+  // One time-saving approach to this is to reference the old state data in the new Set State call. An example is below; we pass the existing value of sameAddress into the new state dataset.
 
     const switchNameHandler = () => {
       useState({
@@ -123,9 +127,43 @@ import React, { useState} from 'react'
           { name: 'Andy', age: 25 },
           { name: 'Carlos', age: 28 },
           { name: 'Carley', age: 26 }
+        ],
+        sameAddress: personsState.sameAddress
+      })
+    }
+
+
+// An alternative approach to this State issue is to call useState multiple times to define a number of seperate State variables, and to update them individually as required. This is totally acceptable and can be a more elegant solution. Further, the State entities don't have to be objects; they can be any type of variable that we need.
+
+//In the example below the Persons state and Address state are stored as seperate State entities. personsState is an object containing an array, as previously. addressState is an object containing one property. It could be anything else we like; an array, a string, whatever.
+
+// When we then update the state of the `personsState` state entity using the switchNameHandler method (we defined this a while ago using desctructuring, above), we don't modify the `sameAddress` state object. 
+
+
+    const personsState = useState({
+      persons: [
+        { name: 'David', age: 25 },
+        { name: 'Pablo', age: 28 },
+        { name: 'Dani', age: 26 }
+      ],
+    });
+
+    const addressState = useState({
+      sameAddress: true,
+    })
+
+    const switchNameHandler = () => {
+      setPersonsState({
+        persons: [
+          {name: 'Andy', age: 25}
+          { name: 'Carlos', age: 28 },
+          { name: 'Carley', age: 26 }
         ]
       })
     }
+  
+
+
 
 // The Render part of the component is basically the same, but again we don't need to use .this where we did previously and we access the destructured `personsState` rather than `this.state` when providing some values.
 
